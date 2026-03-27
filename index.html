@@ -1,0 +1,1636 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BBOTech — Sales Playbook</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --navy: #0f1629;
+  --navy2: #1a2540;
+  --navy3: #243058;
+  --accent: #4f8ef7;
+  --accent2: #38d9a9;
+  --warn: #f6a623;
+  --danger: #e05c5c;
+  --text: #e8eaf2;
+  --text2: #9ba5c0;
+  --text3: #5c6880;
+  --border: rgba(255,255,255,0.07);
+  --card: rgba(255,255,255,0.04);
+  --tag-h: #1e3a5f;
+  --tag-ht: #7fb3f5;
+  --tag-g: #0d3326;
+  --tag-gt: #38d9a9;
+  --tag-w: #3d2800;
+  --tag-wt: #f6a623;
+  --tag-r: #3d1010;
+  --tag-rt: #e05c5c;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  background: var(--navy);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 240px;
+  min-height: 100vh;
+  background: var(--navy2);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.sidebar-header {
+  padding: 24px 20px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebar-logo {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.3px;
+}
+
+.sidebar-sub {
+  font-size: 10px;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 3px;
+}
+
+.sidebar-section {
+  padding: 16px 0 4px;
+}
+
+.sidebar-section-label {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--text3);
+  padding: 0 20px 8px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 20px;
+  cursor: pointer;
+  transition: all 0.15s;
+  border-left: 2px solid transparent;
+  font-size: 13px;
+  color: var(--text2);
+}
+
+.nav-item:hover {
+  background: var(--card);
+  color: var(--text);
+}
+
+.nav-item.active {
+  background: rgba(79,142,247,0.1);
+  border-left-color: var(--accent);
+  color: var(--text);
+  font-weight: 500;
+}
+
+.nav-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dot-script { background: var(--accent); }
+.dot-doc { background: var(--accent2); }
+
+.sidebar-footer {
+  margin-top: auto;
+  padding: 16px 20px;
+  border-top: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--text3);
+}
+
+/* MAIN */
+.main {
+  flex: 1;
+  min-width: 0;
+  padding: 32px 40px 60px;
+  max-width: 860px;
+}
+
+.section { display: none; }
+.section.active { display: block; }
+
+.page-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.5px;
+  margin-bottom: 4px;
+}
+
+.page-sub {
+  font-size: 13px;
+  color: var(--text2);
+  margin-bottom: 28px;
+  line-height: 1.6;
+}
+
+/* TAGS */
+.tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+.tag-blue { background: var(--tag-h); color: var(--tag-ht); }
+.tag-green { background: var(--tag-g); color: var(--tag-gt); }
+.tag-orange { background: var(--tag-w); color: var(--tag-wt); }
+.tag-red { background: var(--tag-r); color: var(--tag-rt); }
+
+/* SCRIPT BLOCK */
+.script-block {
+  background: var(--navy2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.script-header {
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.script-step {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.script-step.g { background: var(--accent2); }
+.script-step.o { background: var(--warn); }
+
+.script-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.script-time {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--text3);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.script-body {
+  padding: 16px;
+}
+
+.speech-bubble {
+  background: rgba(79,142,247,0.08);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 14px;
+  margin: 8px 0;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--text);
+  font-style: italic;
+}
+
+.speech-bubble.prospect {
+  background: rgba(255,255,255,0.04);
+  border-left-color: var(--text3);
+  color: var(--text2);
+}
+
+.speech-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 5px;
+  color: var(--accent);
+}
+
+.speech-label.prospect { color: var(--text3); }
+
+.tip-box {
+  background: rgba(246,166,35,0.07);
+  border: 1px solid rgba(246,166,35,0.2);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--warn);
+  line-height: 1.6;
+}
+
+.tip-box::before {
+  content: "Tip: ";
+  font-weight: 700;
+}
+
+.tip-box.danger {
+  background: rgba(224,92,92,0.07);
+  border-color: rgba(224,92,92,0.2);
+  color: var(--danger);
+}
+
+.tip-box.danger::before { content: "Tránh: "; }
+
+.tip-box.success {
+  background: rgba(56,217,169,0.07);
+  border-color: rgba(56,217,169,0.2);
+  color: var(--accent2);
+}
+
+.tip-box.success::before { content: "Mục tiêu: "; }
+
+/* OBJECTION CARDS */
+.objection-grid {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.objection-card {
+  background: var(--navy2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.objection-header {
+  background: var(--tag-r);
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tag-rt);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.objection-header::before {
+  content: "✗";
+  font-size: 12px;
+}
+
+.objection-body {
+  padding: 14px 16px;
+}
+
+.response-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--accent2);
+  margin-bottom: 6px;
+  margin-top: 10px;
+}
+
+.response-label:first-child { margin-top: 0; }
+
+.response-text {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text);
+  background: rgba(56,217,169,0.06);
+  border-left: 3px solid var(--accent2);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 12px;
+  font-style: italic;
+}
+
+/* FOLLOW-UP */
+.fu-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 20px;
+}
+
+.fu-day {
+  display: flex;
+  gap: 20px;
+}
+
+.fu-line-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40px;
+  flex-shrink: 0;
+}
+
+.fu-badge {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--navy3);
+  border: 2px solid var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent);
+  flex-shrink: 0;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.fu-line {
+  width: 2px;
+  flex: 1;
+  background: var(--border);
+  margin: 4px 0;
+  min-height: 20px;
+}
+
+.fu-content {
+  flex: 1;
+  padding-bottom: 24px;
+}
+
+.fu-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+  margin-top: 8px;
+}
+
+.fu-goal {
+  font-size: 11px;
+  color: var(--text3);
+  margin-bottom: 10px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* DOCS */
+.doc-card {
+  background: var(--navy2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.doc-header {
+  padding: 14px 18px;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.doc-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: rgba(56,217,169,0.15);
+  color: var(--accent2);
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.doc-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.doc-body {
+  padding: 18px;
+}
+
+/* PRICING TABLE */
+.price-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+  margin-top: 12px;
+}
+
+.price-table th {
+  background: var(--navy3);
+  color: var(--text2);
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.price-table th.highlight-col {
+  background: rgba(79,142,247,0.15);
+  color: var(--accent);
+}
+
+.price-table td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text2);
+  vertical-align: top;
+  line-height: 1.5;
+}
+
+.price-table td.highlight-col {
+  background: rgba(79,142,247,0.05);
+  color: var(--text);
+}
+
+.price-table tr:last-child td { border-bottom: none; }
+
+.price-table td:first-child {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.check { color: var(--accent2); font-weight: 700; }
+.cross { color: var(--text3); }
+.partial { color: var(--warn); }
+
+/* SLIDE DECK */
+.slide-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.slide-card {
+  background: var(--navy3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  position: relative;
+}
+
+.slide-num {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text3);
+}
+
+.slide-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+  margin-right: 30px;
+}
+
+.slide-content {
+  font-size: 11.5px;
+  color: var(--text2);
+  line-height: 1.6;
+}
+
+.slide-key {
+  margin-top: 8px;
+  font-size: 10.5px;
+  color: var(--accent2);
+  font-weight: 500;
+}
+
+/* PROPOSAL */
+.proposal-section {
+  margin-bottom: 20px;
+}
+
+.proposal-section-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text3);
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.proposal-field {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  font-size: 12.5px;
+}
+
+.proposal-field:last-child { border-bottom: none; }
+
+.field-label {
+  color: var(--text3);
+  font-weight: 500;
+}
+
+.field-value {
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+}
+
+.field-value.editable {
+  background: rgba(255,255,255,0.04);
+  border-radius: 4px;
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 12.5px;
+  color: var(--text2);
+  font-style: italic;
+}
+
+/* CHECKLIST */
+.checklist-group {
+  margin-bottom: 20px;
+}
+
+.checklist-group-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.phase-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.pb-1 { background: rgba(79,142,247,0.15); color: var(--accent); }
+.pb-2 { background: rgba(246,166,35,0.15); color: var(--warn); }
+.pb-3 { background: rgba(56,217,169,0.15); color: var(--accent2); }
+
+.checklist-items {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 12px;
+  background: var(--navy2);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  font-size: 12.5px;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.checklist-item:hover {
+  border-color: rgba(255,255,255,0.15);
+  color: var(--text);
+}
+
+.checklist-item.done {
+  background: rgba(56,217,169,0.05);
+  border-color: rgba(56,217,169,0.2);
+}
+
+.checklist-item.done .ci-text {
+  text-decoration: line-through;
+  color: var(--text3);
+}
+
+.ci-box {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1.5px solid var(--text3);
+  flex-shrink: 0;
+  margin-top: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: var(--accent2);
+  transition: all 0.15s;
+}
+
+.checklist-item.done .ci-box {
+  background: var(--accent2);
+  border-color: var(--accent2);
+  color: var(--navy);
+}
+
+.ci-text { flex: 1; line-height: 1.5; }
+.ci-owner {
+  font-size: 10px;
+  color: var(--text3);
+  font-family: 'JetBrains Mono', monospace;
+  flex-shrink: 0;
+}
+
+/* DIVIDER */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 24px 0;
+}
+
+/* HIGHLIGHT ROW */
+.highlight-row {
+  background: rgba(79,142,247,0.06);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin: 12px 0;
+  font-size: 13px;
+  color: var(--text);
+  border: 1px solid rgba(79,142,247,0.15);
+  line-height: 1.6;
+}
+
+.highlight-row strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* STEPS ROW */
+.steps-row {
+  display: flex;
+  gap: 12px;
+  margin: 12px 0;
+}
+
+.step-pill {
+  flex: 1;
+  background: var(--navy3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.5;
+}
+
+.step-pill strong {
+  display: block;
+  font-size: 11px;
+  color: var(--text3);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 3px;
+}
+
+/* PRINT */
+@media print {
+  .sidebar { display: none; }
+  .main { max-width: 100%; padding: 20px; }
+  .section { display: block !important; page-break-before: always; }
+  .section:first-child { page-break-before: auto; }
+}
+
+/* SCROLL */
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">BBOTech</div>
+    <div class="sidebar-sub">Sales Playbook v1.0</div>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Kịch bản tư vấn</div>
+    <div class="nav-item active" onclick="show('s1')">
+      <span class="nav-dot dot-script"></span> Cold Visit
+    </div>
+    <div class="nav-item" onclick="show('s2')">
+      <span class="nav-dot dot-script"></span> Demo sản phẩm
+    </div>
+    <div class="nav-item" onclick="show('s3')">
+      <span class="nav-dot dot-script"></span> Xử lý từ chối
+    </div>
+    <div class="nav-item" onclick="show('s4')">
+      <span class="nav-dot dot-script"></span> Follow-up
+    </div>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Tài liệu</div>
+    <div class="nav-item" onclick="show('d1')">
+      <span class="nav-dot dot-doc"></span> Pitch Deck (8 slides)
+    </div>
+    <div class="nav-item" onclick="show('d2')">
+      <span class="nav-dot dot-doc"></span> Bảng giá & so sánh
+    </div>
+    <div class="nav-item" onclick="show('d3')">
+      <span class="nav-dot dot-doc"></span> Proposal template
+    </div>
+    <div class="nav-item" onclick="show('d4')">
+      <span class="nav-dot dot-doc"></span> Onboarding checklist
+    </div>
+  </div>
+
+  <div class="sidebar-footer">
+    Target: F&B + Spa · TP.HCM<br>Dịch vụ: WaaS giai đoạn 1
+  </div>
+</div>
+
+<!-- ============================
+     SECTION S1: COLD VISIT
+============================= -->
+<div class="main">
+
+<div class="section active" id="s1">
+  <span class="tag tag-blue">Kịch bản 1</span>
+  <div class="page-title">Cold Visit — Gặp trực tiếp lần đầu</div>
+  <div class="page-sub">Áp dụng khi đến tận nơi, chủ quán/spa chưa biết BBOTech. Mục tiêu: <strong>không close deal ngay</strong> — chỉ cần đặt được lịch demo 15 phút.</div>
+
+  <div class="highlight-row">
+    <strong>Nguyên tắc vàng:</strong> Đừng bán dịch vụ. Hỏi về vấn đề của họ. Người mua hàng từ người lắng nghe, không từ người chào hàng.
+  </div>
+
+  <div class="steps-row">
+    <div class="step-pill"><strong>Chuẩn bị</strong>Xem qua FB/IG quán trước 2 phút</div>
+    <div class="step-pill"><strong>Mang theo</strong>Điện thoại có demo site sẵn</div>
+    <div class="step-pill"><strong>Thời điểm</strong>14:00–16:00 hoặc 9:00–11:00</div>
+  </div>
+
+  <div class="script-block">
+    <div class="script-header">
+      <span class="script-step">1</span>
+      <span class="script-title">Mở đầu — Hook trong 15 giây đầu</span>
+      <span class="script-time">0–30s</span>
+    </div>
+    <div class="script-body">
+      <div class="speech-label">Sales nói:</div>
+      <div class="speech-bubble">"Chào anh/chị, em tên [Tên], bên công ty BBOTech. Em thấy quán mình đang có page Facebook khá đẹp — hỏi thăm một chút được không ạ? Không mất nhiều thời gian đâu ạ, khoảng 2–3 phút thôi."</div>
+      <div class="tip-box">Luôn mở bằng một nhận xét cụ thể về quán — không dùng câu mở cửa chung chung như "Em muốn giới thiệu dịch vụ." Nhận xét cụ thể = bạn đã quan tâm đến họ.</div>
+      <div class="tip-box danger">Không nói "Em bán website" hoặc "Công ty em cung cấp dịch vụ IT" ở bước này. Quá sớm, họ sẽ từ chối ngay.</div>
+    </div>
+  </div>
+
+  <div class="script-block">
+    <div class="script-header">
+      <span class="script-step">2</span>
+      <span class="script-title">Discovery — 3 câu hỏi mở khoá pain point</span>
+      <span class="script-time">1–3 phút</span>
+    </div>
+    <div class="script-body">
+      <div class="speech-label">Câu hỏi 1 — Thực trạng:</div>
+      <div class="speech-bubble">"Hiện tại khách muốn đặt bàn trước thì liên hệ qua kênh nào ạ? Gọi điện hay nhắn tin qua Facebook, Zalo?"</div>
+
+      <div class="speech-label prospect">Khách trả lời (phổ biến):</div>
+      <div class="speech-bubble prospect">"Chủ yếu gọi điện, hoặc nhắn Zalo."</div>
+
+      <div class="speech-label">Câu hỏi 2 — Pain:</div>
+      <div class="speech-bubble">"Vậy những lúc giờ cao điểm, anh/chị hoặc nhân viên có kịp trả lời hết tin nhắn không ạ? Hay có lúc bỏ lỡ khách?"</div>
+
+      <div class="speech-label prospect">Khách trả lời (phổ biến):</div>
+      <div class="speech-bubble prospect">"Bận lắm, nhiều lúc không kịp trả lời."</div>
+
+      <div class="speech-label">Câu hỏi 3 — Mơ ước:</div>
+      <div class="speech-bubble">"Nếu có hệ thống tự đặt bàn online, trả lời tin nhắn tự động — anh/chị chỉ cần xem kết quả — thì anh/chị nghĩ sao ạ?"</div>
+
+      <div class="tip-box success">Nếu khách gật đầu hoặc tỏ ra quan tâm ở câu 3 → họ đã mở cửa. Chuyển ngay sang bước 3.</div>
+    </div>
+  </div>
+
+  <div class="script-block">
+    <div class="script-header">
+      <span class="script-step g">3</span>
+      <span class="script-title">Cắm hook — Social proof ngắn</span>
+      <span class="script-time">30 giây</span>
+    </div>
+    <div class="script-body">
+      <div class="speech-label">Sales nói:</div>
+      <div class="speech-bubble">"Bên em đang giúp một số quán ở [Quận X] làm được điều đó — website đặt bàn online, chatbot tự trả lời Zalo/Facebook, và họ chỉ trả phí hàng tháng thấp hơn thuê một nhân viên part-time. Anh/chị có muốn xem thử không ạ? Em show trên điện thoại, mất 10–15 phút thôi."</div>
+      <div class="tip-box">Nếu chưa có case study thật: dùng "Em đang chuẩn bị ra mắt dịch vụ, và đang tìm 5 quán đầu tiên để hợp tác với giá ưu đãi đặc biệt."</div>
+    </div>
+  </div>
+
+  <div class="script-block">
+    <div class="script-header">
+      <span class="script-step o">4</span>
+      <span class="script-title">Chốt next step — Đặt lịch demo</span>
+      <span class="script-time">30 giây</span>
+    </div>
+    <div class="script-body">
+      <div class="speech-label">Sales nói:</div>
+      <div class="speech-bubble">"Anh/chị có thể ngồi 15 phút vào [thứ X] buổi sáng hoặc [thứ Y] buổi chiều không ạ? Em sẽ mang laptop, show cho anh/chị xem một trang web giống quán mình — nếu thấy phù hợp thì mình nói chuyện tiếp, không phù hợp thì thôi, không áp lực gì ạ."</div>
+      <div class="speech-label">Nếu họ không có thời gian ngay:</div>
+      <div class="speech-bubble">"Vậy em xin số Zalo của anh/chị nhé, em gửi hình thử vài mẫu trang web bên em đang làm cho anh/chị xem trước?"</div>
+      <div class="tip-box danger">KHÔNG rời đi mà không có ít nhất 1 trong 2: số Zalo hoặc lịch hẹn cụ thể. Nếu không có cả hai = cuộc gặp thất bại.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================
+     SECTION S2: DEMO
+============================= -->
+<div class="section" id="s2">
+  <span class="tag tag-blue">Kịch bản 2</span>
+  <div class="page-title">Demo sản phẩm — Show website mẫu</div>
+  <div class="page-sub">Áp dụng trong buổi demo 15–20 phút. Mục tiêu: <strong>khiến khách "thấy mình" trong sản phẩm</strong> và muốn có ngay. Chuẩn bị sẵn 2 demo site: 1 cho F&B, 1 cho Spa.</div>
+
+  <div class="highlight-row">
+    <strong>Quy tắc demo:</strong> Nói ít hơn, cho xem nhiều hơn. Mỗi tính năng bạn show phải gắn với một vấn đề họ đã thừa nhận ở buổi gặp trước.
+  </div>
+
+  <div class="script-block">
+    <div class="script-header">
+      <span class="script-step">1</span>
+      <span class="script-title">Frame trước khi demo</span>
+      <span class="script-time">1 phút</span>
+    </div>
+    <div class="script-body">
+      <div class="speech-label">Sales nói:</div>
+      <div class="speech-bubble">"Oke anh/chị, hôm nay em sẽ show khoảng 10 phút thôi. Em muốn anh/chị xem 3 thứ chính: một là tốc độ website, hai là khách đặt bàn thế nào, ba là anh/chị quản lý ra sao. Sau đó mình nói chuyện về giá cả nếu anh/chị thấy phù hợp. Okay không ạ?"</div>
+      <div class="tip-box">Set agenda rõ ràng trước = khách không bị bất ngờ khi bạn đề cập giá. Họ đã biết điều đó sẽ đến.</div>
+    </div>
+  </div>
+
+  <div class="script-block">
+    <div class="script-header">
+      <span class="script-step">2</span>
+      <span class="script-title">Demo điểm 1 — Tốc độ & Mobile</span>
+      <span class="script-time">2–3 phút</span>
+    </div>
+    <div class="script-body">
+      <div class="speech-label">Thao tác:</div>
+      <div class="speech-bubble">Mở demo site trên điện thoại. Đưa điện thoại cho khách tự cầm và tự scroll.</div>
+      <div class="speech-label">Sales nói:</div>
+      <div class="speech-bubble">"Anh/chị thử scroll xem — trang load nhanh không ạ? Đây là trang em làm cho một quán tương tự bên [Quận]. Khách vào bằng điện thoại, tìm menu, đặt bàn — hết khoảng 30 giây thôi. Anh/chị thử bấm đặt bàn xem sao ạ?"</div>
+      <div class="tip-box success">Cho khách TỰ THAO TÁC — không phải xem bạn thao tác. Khi họ tự dùng, trải nghiệm sở hữu bắt đầu hình thành.</div>
+    </div>
+  </div>
+
+  <div class="script-block">
+    <div class="script-header">
+      <span class="script-step">3</span>
+      <span class="script-title">Demo điểm 2 — Đặt bàn & Tự động hóa</span>
+      <span class="script-time">3 phút</span>
+    </div>
+    <div class="script-body">
+      <div class="speech-label">Sales nói:</div>
+      <div class="speech-bubble">"Bây giờ anh/chị đặt bàn thử — điền tên, số bàn, giờ. Xong anh/chị xem điều gì xảy ra."</div>
+      <div class="speech-label">Sau khi khách đặt:</div>
+      <div class="speech-bubble">"Thấy không ạ? Hệ thống tự gửi xác nhận về cho khách. Đồng thời anh/chị nhận thông báo trên điện thoại — không cần ai trực. Buổi trưa đông khách mà anh/chị vẫn đang bếp, không lo bỏ sót đặt bàn nữa."</div>
+      <div class="tip-box">Gắn tính năng với PAIN họ đã chia sẻ ở buổi cold visit. "Anh/chị hôm trước nói bỏ sót tin nhắn — hệ thống này giải quyết đúng điều đó."</div>
+    </div>
+  </div>
+
+  <div class="script-block">
+    <div class="script-header">
+      <span class="script-step">4</span>
+      <span class="script-title">Demo điểm 3 — Trang quản lý</span>
+      <span class="script-time">2 phút</span>
+    </div>
+    <div class="script-body">
+      <div class="speech-label">Sales nói:</div>
+      <div class="speech-bubble">"Còn đây là trang quản lý của anh/chị. Mỗi sáng mở ra thấy hôm nay có bao nhiêu đặt bàn, ai hủy, khách nào nhắn tin. Không cần biết gì về tech — nhìn vào là hiểu ngay."</div>
+      <div class="tip-box danger">Không show quá nhiều tính năng. Chỉ 3 điểm chính, đúng với pain của khách này. Càng show nhiều, khách càng thấy phức tạp.</div>
+    </div>
+  </div>
+
+  <div class="script-block">
+    <div class="script-header">
+      <span class="script-step g">5</span>
+      <span class="script-title">Bridge & Anchor giá</span>
+      <span class="script-time">3–4 phút</span>
+    </div>
+    <div class="script-body">
+      <div class="speech-label">Bridge:</div>
+      <div class="speech-bubble">"Anh/chị thấy sao ạ? Nếu quán mình có hệ thống như vậy thì sẽ giải quyết được phần nào vấn đề không?"</div>
+
+      <div class="speech-label prospect">Khách thường hỏi:</div>
+      <div class="speech-bubble prospect">"Chi phí bao nhiêu vậy?"</div>
+
+      <div class="speech-label">Anchor giá — ĐỪNG nói giá ngay. Anchor trước:</div>
+      <div class="speech-bubble">"Trước khi em nói số cụ thể — anh/chị đang trả khoảng bao nhiêu cho marketing online mỗi tháng ạ? Chạy quảng cáo hay thuê người đăng bài?"</div>
+
+      <div class="speech-label">Sau khi khách trả lời:</div>
+      <div class="speech-bubble">"Gói cơ bản bên em là 2.990.000đ/tháng — sau phí setup một lần. Tức là ít hơn chi phí anh/chị đang trả cho quảng cáo, mà lại có hệ thống chạy 24/7 không cần trả lương. Và bên em quản lý toàn bộ — anh/chị không cần biết gì về tech."</div>
+      <div class="tip-box">Luôn so sánh với chi phí họ ĐÃ đang trả, không so sánh với con số trừu tượng. Giá 3 triệu/tháng nghe lớn; nhưng ít hơn quảng cáo Facebook đang chạy thì nghe hợp lý.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================
+     SECTION S3: OBJECTION
+============================= -->
+<div class="section" id="s3">
+  <span class="tag tag-orange">Kịch bản 3</span>
+  <div class="page-title">Xử lý từ chối — Objection Handling</div>
+  <div class="page-sub">5 từ chối phổ biến nhất khi bán dịch vụ TaaS cho SME. Nguyên tắc: <strong>không phản bác, không tranh luận</strong> — thấu hiểu trước, dẫn dắt sau.</div>
+
+  <div class="highlight-row">
+    <strong>Công thức chung:</strong> Thừa nhận → Hỏi làm rõ → Reframe → Đề xuất bước nhỏ tiếp theo
+  </div>
+
+  <div class="objection-grid">
+    <div class="objection-card">
+      <div class="objection-header">"Đắt quá / chi phí cao"</div>
+      <div class="objection-body">
+        <div class="response-label">Thừa nhận trước:</div>
+        <div class="response-text">"Dạ anh/chị nói đúng, đây là khoản đầu tư mới. Anh/chị đang so sánh với phương án nào ạ — thuê freelancer làm web một lần, hay đang dùng dịch vụ khác?"</div>
+        <div class="response-label">Reframe:</div>
+        <div class="response-text">"Điểm khác của bên em là: anh/chị không chỉ trả cho trang web — mà trả cho cả đội IT online quản lý, cập nhật, sửa lỗi, và hỗ trợ 24/7. Freelancer làm xong rồi đi, có lỗi phải tìm người khác. Còn bên em — em ở đây mãi, hàng tháng."</div>
+        <div class="response-label">Bước nhỏ:</div>
+        <div class="response-text">"Anh/chị muốn em làm một bản so sánh chi phí cụ thể giữa phương án hiện tại và gói bên em không ạ? Để mình nhìn vào số liệu thực tế."</div>
+      </div>
+    </div>
+
+    <div class="objection-card">
+      <div class="objection-header">"Để tôi nghĩ thêm / bàn với vợ/chồng"</div>
+      <div class="objection-body">
+        <div class="response-label">Thừa nhận:</div>
+        <div class="response-text">"Dạ đương nhiên rồi, đây là quyết định quan trọng. Em hiểu ạ."</div>
+        <div class="response-label">Hỏi làm rõ điều thật sự:</div>
+        <div class="response-text">"Anh/chị cho em hỏi thêm — trong những điều em trình bày hôm nay, có điểm nào anh/chị chưa rõ hoặc còn băn khoăn không ạ? Để em giải thích thêm trước khi anh/chị về suy nghĩ."</div>
+        <div class="response-label">Tạo urgency nhẹ:</div>
+        <div class="response-text">"Bên em đang có 3 suất giá ưu đãi cho khách đăng ký trong tháng này — em sẽ giữ suất cho anh/chị đến [ngày cụ thể]. Sau đó quay về giá gốc. Anh/chị cần bao lâu để quyết định ạ?"</div>
+      </div>
+    </div>
+
+    <div class="objection-card">
+      <div class="objection-header">"Tôi đang có website rồi / dùng dịch vụ khác rồi"</div>
+      <div class="objection-body">
+        <div class="response-label">Tôn trọng, không cạnh tranh trực tiếp:</div>
+        <div class="response-text">"Dạ tốt quá ạ, vậy là anh/chị đã đi trước nhiều quán khác rồi. Website đó ai đang quản lý cho anh/chị ạ — có cần gọi họ khi muốn cập nhật hay thêm gì không?"</div>
+        <div class="response-label">Tìm gap:</div>
+        <div class="response-text">"Anh/chị có hài lòng với tốc độ hỗ trợ không ạ? Thường cần bao lâu để họ xử lý khi có sự cố?"</div>
+        <div class="response-label">Nếu gap tồn tại:</div>
+        <div class="response-text">"Điểm khác bên em là anh/chị có thể nhắn Zalo em bất kỳ lúc nào — em phản hồi trong 2 giờ. Không phải đợi ticket hay giờ hành chính. Với mô hình quán ăn, lỗi website lúc 11 giờ trưa là thảm họa — em hiểu điều đó."</div>
+      </div>
+    </div>
+
+    <div class="objection-card">
+      <div class="objection-header">"Tôi không biết về công nghệ, quản lý không được"</div>
+      <div class="objection-body">
+        <div class="response-label">Biến lo ngại thành lợi thế:</div>
+        <div class="response-text">"Đó chính xác là lý do anh/chị cần bên em ạ. Nếu anh/chị biết tech, anh/chị tự làm được — không cần đến em. Bên em sinh ra để phục vụ những người giỏi kinh doanh nhưng không muốn đau đầu về công nghệ."</div>
+        <div class="response-label">Cụ thể hóa trách nhiệm:</div>
+        <div class="response-text">"Anh/chị không cần làm gì về tech hết. Em setup, em vận hành, em sửa lỗi, em cập nhật. Anh/chị chỉ cần nói 'em ơi, thêm món mới vào menu' — em xong trong ngày."</div>
+      </div>
+    </div>
+
+    <div class="objection-card">
+      <div class="objection-header">"Làm thử miễn phí được không?"</div>
+      <div class="objection-body">
+        <div class="response-label">Đừng cho miễn phí, hãy cho "chi phí thấp để thử":</div>
+        <div class="response-text">"Bên em không có gói miễn phí vì chi phí vận hành là có thật ạ — server, thời gian setup, nhân sự. Nhưng em hiểu anh/chị muốn thử trước khi đầu tư lớn."</div>
+        <div class="response-label">Đề xuất trial có cấu trúc:</div>
+        <div class="response-text">"Bên em có thể làm thế này: anh/chị đóng phí setup trước [X đồng], chạy 2 tháng đầu — nếu không hài lòng, em hoàn lại 50% phí setup. Rủi ro phía anh/chị là tối thiểu, còn em phải làm tốt để giữ khách. Anh/chị thấy sao?"</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================
+     SECTION S4: FOLLOW-UP
+============================= -->
+<div class="section" id="s4">
+  <span class="tag tag-blue">Kịch bản 4</span>
+  <div class="page-title">Follow-up sau lần gặp đầu</div>
+  <div class="page-sub">Chuỗi 3 lần follow-up qua Zalo. Mục tiêu: duy trì hiện diện mà không gây phiền. <strong>80% deal được close ở lần follow-up thứ 3–5</strong>, không phải lần gặp đầu.</div>
+
+  <div class="highlight-row">
+    <strong>Quy tắc:</strong> Mỗi lần follow-up phải mang thêm giá trị — không chỉ hỏi "anh/chị nghĩ sao rồi ạ?" mà không có gì mới.
+  </div>
+
+  <div class="fu-timeline">
+    <div class="fu-day">
+      <div class="fu-line-wrap">
+        <div class="fu-badge">+1h</div>
+        <div class="fu-line"></div>
+      </div>
+      <div class="fu-content">
+        <div class="fu-title">Zalo ngay sau khi gặp — Gửi tài liệu</div>
+        <div class="fu-goal">Mục tiêu: để lại dấu ấn, khách có gì để nhìn lại</div>
+        <div class="speech-bubble">"Chào anh/chị [Tên]! Em [Tên], BBOTech vừa gặp hồi nãy ạ. Em gửi anh/chị xem thêm 2 demo mẫu bên em đang làm:
+• [link demo F&B]
+• [link demo Spa]
+
+Anh/chị xem thử, có câu hỏi gì cứ nhắn em nha ạ 🙏"</div>
+        <div class="tip-box">Gửi trong vòng 1 tiếng sau khi gặp — lúc này họ còn nhớ bạn rõ nhất. Để qua hôm sau là đã nhạt.</div>
+      </div>
+    </div>
+
+    <div class="fu-day">
+      <div class="fu-line-wrap">
+        <div class="fu-badge">+3d</div>
+        <div class="fu-line"></div>
+      </div>
+      <div class="fu-content">
+        <div class="fu-title">Ngày 3 — Giá trị mới + Kết quả thực tế</div>
+        <div class="fu-goal">Mục tiêu: cho thấy bạn đang làm việc, không chỉ chờ khách</div>
+        <div class="speech-bubble">"Chào anh/chị [Tên]! Em vừa hoàn thiện thêm một mẫu trang cho quán bún bò bên Quận 3 — load nhanh hơn, có tích hợp Google Maps luôn ạ: [link]
+
+Tiện thể em muốn hỏi — anh/chị có muốn em làm thử một mockup sơ bộ cho quán mình không ạ? Em làm trong ngày, xem trước rồi mình quyết định. Không mất phí ạ."</div>
+        <div class="tip-box">Offer "mockup miễn phí" là cách tốt để tạo commitment thấp. Khi họ đã có mockup với logo, màu sắc của quán họ → rất khó từ chối.</div>
+      </div>
+    </div>
+
+    <div class="fu-day">
+      <div class="fu-line-wrap">
+        <div class="fu-badge">+7d</div>
+        <div class="fu-line"></div>
+      </div>
+      <div class="fu-content">
+        <div class="fu-title">Ngày 7 — Urgency thật sự + Câu hỏi thẳng</div>
+        <div class="fu-goal">Mục tiêu: nhận được câu trả lời dứt khoát — yes hoặc no</div>
+        <div class="speech-bubble">"Anh/chị [Tên] ơi, em muốn hỏi thẳng một chút ạ — hồi gặp anh/chị có vẻ quan tâm đến hệ thống đặt bàn online. Hiện tại anh/chị đang cân nhắc điểm nào ạ? Có thể em giải đáp thêm không?
+
+Tuần này bên em có 2 suất setup ưu đãi cuối tháng — em muốn giữ một suất cho quán mình nếu anh/chị vẫn quan tâm. Nhưng nếu chưa phù hợp thì anh/chị cứ nói thẳng, em hiểu ạ."</div>
+        <div class="tip-box success">Câu cuối quan trọng: "nếu chưa phù hợp thì cứ nói thẳng" — tạo cảm giác an toàn để khách trả lời thật. Bạn cần biết mình có nên tiếp tục hay không.</div>
+        <div class="tip-box danger">Sau ngày 7 mà vẫn không phản hồi: chuyển sang "nuture list" nhẹ — 1 lần/tháng. Đừng spam. Bán hàng không phải cưỡng ép.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================
+     SECTION D1: PITCH DECK
+============================= -->
+<div class="section" id="d1">
+  <span class="tag tag-green">Tài liệu 1</span>
+  <div class="page-title">Pitch Deck — Cấu trúc 8 slides</div>
+  <div class="page-sub">Dùng khi khách yêu cầu tài liệu, hoặc khi gặp nhóm quyết định (nhiều người). Giữ mỗi slide tối đa 5 dòng chữ. <strong>Ảnh và số liệu nói mạnh hơn chữ.</strong></div>
+
+  <div class="highlight-row">
+    <strong>Nguyên tắc thiết kế:</strong> Mỗi slide trả lời 1 câu hỏi trong đầu khách. Đừng cố giải thích mọi thứ — pitch deck mở ra cuộc trò chuyện, không kết thúc nó.
+  </div>
+
+  <div class="slide-grid">
+    <div class="slide-card">
+      <span class="slide-num">01</span>
+      <div class="slide-name">Cover — Định vị</div>
+      <div class="slide-content">Headline: <em>"Phòng IT Online của doanh nghiệp bạn"</em><br>Sub: BBOTech — Không cần đội IT riêng<br>Logo + thông tin liên hệ</div>
+      <div class="slide-key">Câu hỏi khách: "Đây là ai?"</div>
+    </div>
+
+    <div class="slide-card">
+      <span class="slide-num">02</span>
+      <div class="slide-name">Pain Point — Vấn đề thực tế</div>
+      <div class="slide-content">Stat: "90% SME Việt Nam không có bộ phận IT"<br>3 tình huống: website hỏng giờ cao điểm / bỏ lỡ tin nhắn khách / không ai cập nhật nội dung<br>Ảnh minh họa thực tế</div>
+      <div class="slide-key">Câu hỏi khách: "Có phải vấn đề của mình không?"</div>
+    </div>
+
+    <div class="slide-card">
+      <span class="slide-num">03</span>
+      <div class="slide-name">Solution — BBOTech là gì</div>
+      <div class="slide-content">1 câu: "Chúng tôi là phòng IT thuê ngoài — setup, vận hành, bảo trì, hỗ trợ liên tục"<br>Diagram đơn giản: Doanh nghiệp ↔ BBOTech ↔ Hệ thống công nghệ</div>
+      <div class="slide-key">Câu hỏi khách: "Họ làm gì?"</div>
+    </div>
+
+    <div class="slide-card">
+      <span class="slide-num">04</span>
+      <div class="slide-name">So sánh mô hình</div>
+      <div class="slide-content">Bảng 3 cột: Agency truyền thống / SaaS tự dùng / BBOTech TaaS<br>Highlight điểm khác biệt: self-host, setup xong + duy trì, giá cố định</div>
+      <div class="slide-key">Câu hỏi khách: "Khác gì người khác?"</div>
+    </div>
+
+    <div class="slide-card">
+      <span class="slide-num">05</span>
+      <div class="slide-name">Demo / Portfolio</div>
+      <div class="slide-content">Screenshots 2–3 website mẫu đẹp<br>QR code → link demo live<br>Tên quán + ngành (kể cả đang làm thử)</div>
+      <div class="slide-key">Câu hỏi khách: "Làm có đẹp không?"</div>
+    </div>
+
+    <div class="slide-card">
+      <span class="slide-num">06</span>
+      <div class="slide-name">Gói dịch vụ & Giá</div>
+      <div class="slide-content">3 gói: Starter / Pro / Premium<br>Hiển thị rõ: phí setup 1 lần + phí tháng<br>Highlight gói Pro là "được chọn nhiều nhất"</div>
+      <div class="slide-key">Câu hỏi khách: "Chi phí bao nhiêu?"</div>
+    </div>
+
+    <div class="slide-card">
+      <span class="slide-num">07</span>
+      <div class="slide-name">Quy trình & Cam kết</div>
+      <div class="slide-content">5 bước: Tư vấn → Ký hợp đồng → Setup → Bàn giao → Hỗ trợ liên tục<br>Cam kết: phản hồi trong 2h, uptime 99%, hoàn tiền nếu không hài lòng</div>
+      <div class="slide-key">Câu hỏi khách: "Rủi ro có được bảo vệ không?"</div>
+    </div>
+
+    <div class="slide-card">
+      <span class="slide-num">08</span>
+      <div class="slide-name">CTA — Bước tiếp theo</div>
+      <div class="slide-content">1 nút duy nhất: "Đặt lịch tư vấn miễn phí 30 phút"<br>Số Zalo + QR code<br>Ưu đãi thời hạn nếu có</div>
+      <div class="slide-key">Câu hỏi khách: "Tôi phải làm gì tiếp theo?"</div>
+    </div>
+  </div>
+
+  <div class="tip-box" style="margin-top:16px">Tạo 2 phiên bản: một bản đầy đủ để trình bày live (nhiều hình, ít chữ), một bản "leave-behind" gửi qua Zalo (có thêm chi tiết). Đừng dùng cùng một bản cho cả hai mục đích.</div>
+</div>
+
+<!-- ============================
+     SECTION D2: PRICING TABLE
+============================= -->
+<div class="section" id="d2">
+  <span class="tag tag-green">Tài liệu 2</span>
+  <div class="page-title">Bảng giá WaaS — Chi tiết & So sánh</div>
+  <div class="page-sub">Phiên bản rõ ràng, khách tự đọc được mà không cần giải thích. Dùng khi gửi qua Zalo hoặc in ra để trên bàn.</div>
+
+  <div class="doc-card">
+    <div class="doc-header">
+      <div class="doc-num">W</div>
+      <div class="doc-title">WaaS — Website as a Service</div>
+    </div>
+    <div class="doc-body">
+      <table class="price-table">
+        <thead>
+          <tr>
+            <th style="width:220px">Tính năng</th>
+            <th>Starter</th>
+            <th class="highlight-col">Pro ★ Phổ biến</th>
+            <th>Premium</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Phí setup lần đầu</td>
+            <td>12.500.000đ</td>
+            <td class="highlight-col">16.000.000đ</td>
+            <td>20.000.000đ</td>
+          </tr>
+          <tr>
+            <td>Phí duy trì hàng tháng</td>
+            <td>2.990.000đ</td>
+            <td class="highlight-col">3.990.000đ</td>
+            <td>4.990.000đ</td>
+          </tr>
+          <tr>
+            <td>Loại website</td>
+            <td>Landing page cơ bản</td>
+            <td class="highlight-col">Đa trang (5–10 trang)</td>
+            <td>Full e-commerce</td>
+          </tr>
+          <tr>
+            <td>Tính năng đặt bàn/lịch</td>
+            <td><span class="check">✓</span> Cơ bản</td>
+            <td class="highlight-col"><span class="check">✓</span> Nâng cao</td>
+            <td><span class="check">✓</span> Custom</td>
+          </tr>
+          <tr>
+            <td>Tích hợp Zalo/Facebook</td>
+            <td><span class="check">✓</span></td>
+            <td class="highlight-col"><span class="check">✓</span></td>
+            <td><span class="check">✓</span></td>
+          </tr>
+          <tr>
+            <td>Quản lý nội dung</td>
+            <td>Nhân viên BBOTech</td>
+            <td class="highlight-col">Nhân viên BBOTech</td>
+            <td>Nhân viên BBOTech</td>
+          </tr>
+          <tr>
+            <td>Cập nhật menu/nội dung</td>
+            <td>2 lần/tháng</td>
+            <td class="highlight-col">Không giới hạn</td>
+            <td>Không giới hạn</td>
+          </tr>
+          <tr>
+            <td>Hỗ trợ kỹ thuật</td>
+            <td>Giờ hành chính</td>
+            <td class="highlight-col">7:00–22:00</td>
+            <td>24/7</td>
+          </tr>
+          <tr>
+            <td>Thời gian phản hồi sự cố</td>
+            <td>8 giờ</td>
+            <td class="highlight-col">4 giờ</td>
+            <td>2 giờ</td>
+          </tr>
+          <tr>
+            <td>Backup dữ liệu</td>
+            <td>Hàng tuần</td>
+            <td class="highlight-col">Hàng ngày</td>
+            <td>Real-time</td>
+          </tr>
+          <tr>
+            <td>Báo cáo traffic hàng tháng</td>
+            <td><span class="cross">—</span></td>
+            <td class="highlight-col"><span class="check">✓</span></td>
+            <td><span class="check">✓</span></td>
+          </tr>
+          <tr>
+            <td>Phù hợp với</td>
+            <td>Quán nhỏ, mới mở</td>
+            <td class="highlight-col">Quán đang phát triển</td>
+            <td>Chuỗi / F&B lớn</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="doc-card">
+    <div class="doc-header">
+      <div class="doc-num">vs</div>
+      <div class="doc-title">So sánh với phương án thay thế</div>
+    </div>
+    <div class="doc-body">
+      <table class="price-table">
+        <thead>
+          <tr>
+            <th>Tiêu chí</th>
+            <th>BBOTech WaaS</th>
+            <th>Thuê freelancer</th>
+            <th>Tự làm trên Wix/Squarespace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Chi phí năm đầu (ước tính)</td>
+            <td>~64M (setup + 12 tháng)</td>
+            <td>~20–40M (làm một lần)</td>
+            <td>~5–15M (phần mềm + tự học)</td>
+          </tr>
+          <tr>
+            <td>Ai quản lý sau đó?</td>
+            <td><span class="check">BBOTech quản lý</span></td>
+            <td><span class="cross">Tự quản lý hoặc thuê thêm</span></td>
+            <td><span class="cross">Tự quản lý</span></td>
+          </tr>
+          <tr>
+            <td>Cập nhật khi cần</td>
+            <td><span class="check">Nhắn Zalo, xong trong ngày</span></td>
+            <td><span class="cross">Phải tìm lại freelancer</span></td>
+            <td><span class="partial">Tự làm nếu biết</span></td>
+          </tr>
+          <tr>
+            <td>Bảo trì, bảo mật</td>
+            <td><span class="check">Bao gồm trong phí tháng</span></td>
+            <td><span class="cross">Thêm phí hoặc tự lo</span></td>
+            <td><span class="partial">Nền tảng lo (giới hạn)</span></td>
+          </tr>
+          <tr>
+            <td>Sở hữu dữ liệu</td>
+            <td><span class="check">100% của khách hàng</span></td>
+            <td><span class="check">100% của khách hàng</span></td>
+            <td><span class="cross">Nền tảng kiểm soát</span></td>
+          </tr>
+          <tr>
+            <td>Rủi ro khi người làm nghỉ</td>
+            <td><span class="check">Không — cả team BBOTech</span></td>
+            <td><span class="cross">Cao — mất liên lạc</span></td>
+            <td><span class="check">Không áp dụng</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tip-box success" style="margin-top:12px">Điểm bán khác biệt: BBOTech là lựa chọn duy nhất vừa có chi phí dự đoán được, vừa có đội ngũ duy trì liên tục. Hai phương án kia đều có điểm yếu về mặt vận hành dài hạn.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================
+     SECTION D3: PROPOSAL
+============================= -->
+<div class="section" id="d3">
+  <span class="tag tag-green">Tài liệu 3</span>
+  <div class="page-title">Proposal Template — Báo giá gửi khách</div>
+  <div class="page-sub">Gửi trong vòng 24 giờ sau buổi gặp/demo. Proposal ngắn gọn, cá nhân hóa > proposal dài và chung chung. <strong>Mục tiêu: khách đọc xong biết chính xác phải làm gì tiếp theo.</strong></div>
+
+  <div class="doc-card">
+    <div class="doc-header">
+      <div class="doc-num">P</div>
+      <div class="doc-title">Cấu trúc Proposal chuẩn — 5 phần</div>
+    </div>
+    <div class="doc-body">
+
+      <div class="proposal-section">
+        <div class="proposal-section-title">Phần 1 — Mở đầu cá nhân hóa</div>
+        <div class="speech-bubble" style="margin:0">
+          "Chào anh/chị <strong>[Tên]</strong>,<br><br>
+Cảm ơn anh/chị đã dành thời gian gặp gỡ với em hôm <strong>[ngày]</strong>. Qua buổi trò chuyện, em hiểu quán <strong>[Tên quán]</strong> đang gặp vấn đề với <strong>[pain point cụ thể họ đã nói]</strong>.<br><br>
+Dưới đây là đề xuất cụ thể bên em soạn riêng cho quán mình."
+        </div>
+      </div>
+
+      <div class="proposal-section">
+        <div class="proposal-section-title">Phần 2 — Hiểu vấn đề của khách (viết lại bằng lời của mình)</div>
+        <div class="speech-bubble" style="margin:0">Liệt kê 2–3 vấn đề khách đã đề cập. Ví dụ:<br>
+"• Quán nhận đặt bàn qua điện thoại/Zalo nhưng thường bỏ sót trong giờ cao điểm<br>
+• Chưa có website chuyên nghiệp để khách tìm kiếm trên Google<br>
+• Không có thời gian để quản lý nội dung mạng xã hội"</div>
+      </div>
+
+      <div class="proposal-section">
+        <div class="proposal-section-title">Phần 3 — Đề xuất giải pháp</div>
+        <div class="proposal-field">
+          <div class="field-label">Gói đề xuất</div>
+          <div class="field-value editable">[WaaS Pro / Starter / Premium]</div>
+        </div>
+        <div class="proposal-field">
+          <div class="field-label">Bao gồm</div>
+          <div class="field-value editable">[Liệt kê 4–5 tính năng cụ thể áp dụng cho quán này]</div>
+        </div>
+        <div class="proposal-field">
+          <div class="field-label">Thời gian setup</div>
+          <div class="field-value editable">[7–14 ngày làm việc]</div>
+        </div>
+        <div class="proposal-field">
+          <div class="field-label">Phí setup</div>
+          <div class="field-value">_______ đồng (thanh toán một lần)</div>
+        </div>
+        <div class="proposal-field">
+          <div class="field-label">Phí duy trì</div>
+          <div class="field-value">_______ đồng / tháng (bắt đầu từ tháng 2)</div>
+        </div>
+        <div class="proposal-field">
+          <div class="field-label">Hợp đồng tối thiểu</div>
+          <div class="field-value">6 tháng (sau đó tháng nào trả tháng đó)</div>
+        </div>
+      </div>
+
+      <div class="proposal-section">
+        <div class="proposal-section-title">Phần 4 — Cam kết cụ thể</div>
+        <div class="checklist-items">
+          <div class="checklist-item">
+            <div class="ci-box">✓</div>
+            <div class="ci-text">Bàn giao website hoàn chỉnh trong [X] ngày làm việc kể từ ngày thanh toán</div>
+          </div>
+          <div class="checklist-item">
+            <div class="ci-box">✓</div>
+            <div class="ci-text">Phản hồi mọi yêu cầu hỗ trợ trong vòng 4 giờ (7:00–22:00)</div>
+          </div>
+          <div class="checklist-item">
+            <div class="ci-box">✓</div>
+            <div class="ci-text">Cập nhật nội dung không giới hạn theo yêu cầu của quán</div>
+          </div>
+          <div class="checklist-item">
+            <div class="ci-box">✓</div>
+            <div class="ci-text">Backup dữ liệu hàng ngày, khôi phục trong 2 giờ nếu có sự cố</div>
+          </div>
+          <div class="checklist-item">
+            <div class="ci-box">✓</div>
+            <div class="ci-text">Nếu không hài lòng trong 30 ngày đầu, hoàn lại 50% phí setup</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="proposal-section">
+        <div class="proposal-section-title">Phần 5 — Bước tiếp theo & Deadline</div>
+        <div class="speech-bubble" style="margin:0">
+          "Để bắt đầu, anh/chị chỉ cần:<br><br>
+1. Xác nhận đồng ý qua Zalo hoặc email<br>
+2. Thanh toán 50% phí setup để em đặt lịch cho team kỹ thuật<br>
+3. Em sẽ liên hệ trong 24h để bắt đầu thu thập thông tin quán<br><br>
+<strong>Proposal này có hiệu lực đến [ngày cụ thể — thường là 7 ngày].</strong> Sau đó giá có thể thay đổi theo lịch nhận dự án.<br><br>
+Anh/chị có câu hỏi gì thêm cứ nhắn em nha ạ!<br>
+[Tên] — [Số Zalo]"
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="tip-box" style="margin-top:4px">Gửi proposal qua Zalo dưới dạng PDF + tin nhắn ngắn. Đừng gửi email — với SME Việt Nam, Zalo có tỷ lệ đọc cao hơn nhiều. Gọi điện báo trước "Em vừa gửi tài liệu qua Zalo rồi ạ, anh/chị xem giúp em nhé."</div>
+</div>
+
+<!-- ============================
+     SECTION D4: ONBOARDING
+============================= -->
+<div class="section" id="d4">
+  <span class="tag tag-green">Tài liệu 4</span>
+  <div class="page-title">Onboarding Checklist — Khi khách ký hợp đồng</div>
+  <div class="page-sub">Quy trình chuẩn từ lúc khách đồng ý đến lúc website live. <strong>Checklist này dùng được thực tế</strong> — click để đánh dấu hoàn thành.</div>
+
+  <div class="highlight-row">
+    <strong>Tại sao quan trọng:</strong> Trải nghiệm onboarding tốt = khách hàng giữ lâu dài. 70% churn xảy ra trong 90 ngày đầu — thường vì khách cảm thấy bị bỏ rơi sau khi ký hợp đồng.
+  </div>
+
+  <div class="checklist-group">
+    <div class="checklist-group-title">
+      <span class="phase-badge pb-1">Ngày 0–1</span>
+      Ngay sau khi ký & nhận cọc
+    </div>
+    <div class="checklist-items">
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="ci-box"></div>
+        <div class="ci-text">Gửi Zalo xác nhận nhận đặt cọc + thời gian bàn giao dự kiến</div>
+        <div class="ci-owner">Sales</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="ci-box"></div>
+        <div class="ci-text">Tạo group Zalo 3 bên: khách, sales phụ trách, và PM/dev lead</div>
+        <div class="ci-owner">Sales</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="ci-box"></div>
+        <div class="ci-text">Gửi form thu thập thông tin: logo, màu sắc thương hiệu, ảnh quán, menu, giờ mở cửa</div>
+        <div class="ci-owner">PM</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="ci-box"></div>
+        <div class="ci-text">Tạo project trên tool quản lý nội bộ (Notion / Trello), assign dev phụ trách</div>
+        <div class="ci-owner">PM</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="ci-box"></div>
+        <div class="ci-text">Ký hợp đồng chính thức (nếu chưa ký khi đặt cọc)</div>
+        <div class="ci-owner">Sales</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="checklist-group">
+    <div class="checklist-group-title">
+      <span class="phase-badge pb-2">Ngày 2–7</span>
+      Giai đoạn setup & phát triển
+    </div>
+    <div class="checklist-items">
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="ci-box"></div>
+        <div class="ci-text">Setup server/hosting, cấu hình domain khách (nếu có)</div>
+        <div class="ci-owner">Dev</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="ci-box"></div>
+        <div class="ci-text">Cài đặt WordPress + theme, cấu hình SSL/HTTPS</div>
+        <div class="ci-owner">Dev</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="ci-box"></div>
+        <div class="ci-text">Xây dựng wireframe/mockup và gửi cho khách duyệt lần 1</div>
+        <div class="ci-owner">Dev/Design</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="ci-box"></div>
+        <div class="ci-text">Khách duyệt mockup → nhận feedback → chỉnh sửa (tối đa 2 lần revision)</div>
+        <div class="ci-owner">PM</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="ci-box"></div>
+        <div class="ci-text">Upload toàn bộ nội dung: ảnh, menu, thông tin quán</div>
+        <div class="ci-owner">Dev</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="ci-box"></div>
+        <div class="ci-text">Cấu hình form đặt bàn + gửi notification về Zalo/email của khách</div>
+        <div class="ci-owner">Dev</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="ci-box"></div>
+        <div class="ci-text">Cài Google Analytics + Google Search Console, submit sitemap</div>
+        <div class="ci-owner">Dev</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="checklist-group">
+    <div class="checklist-group-title">
+      <span class="phase-badge pb-3">Ngày 8–14</span>
+      Kiểm thử, bàn giao & go-live
+    </div>
+    <div class="checklist-items">
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="ci-box"></div>
+        <div class="ci-text">Kiểm tra tốc độ trên mobile (PageSpeed > 80), test form đặt bàn thật</div>
+        <div class="ci-owner">Dev</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="ci-box"></div>
+        <div class="ci-text">Test hiển thị trên iOS + Android + Chrome + Safari</div>
+        <div class="ci-owner">Dev</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="ci-box"></div>
+        <div class="ci-text">Review với khách hàng lần cuối — nhận phê duyệt go-live bằng văn bản (Zalo OK)</div>
+        <div class="ci-owner">PM</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="ci-box"></div>
+        <div class="ci-text">Trỏ domain chính thức, xóa trang "coming soon", activate backup tự động</div>
+        <div class="ci-owner">Dev</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="ci-box"></div>
+        <div class="ci-text">Hướng dẫn khách cách yêu cầu cập nhật: nhắn Zalo group, mô tả thay đổi</div>
+        <div class="ci-owner">Sales/PM</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="ci-box"></div>
+        <div class="ci-text">Nhận thanh toán 50% còn lại của phí setup</div>
+        <div class="ci-owner">Sales</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="checklist-group">
+    <div class="checklist-group-title">
+      <span class="phase-badge pb-3">Ngày 30 & 60</span>
+      Theo dõi sau bàn giao — chống churn
+    </div>
+    <div class="checklist-items">
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="ci-box"></div>
+        <div class="ci-text">Ngày 30: Zalo hỏi thăm — "Anh/chị dùng hệ thống thấy thế nào ạ? Có cần chỉnh gì không?"</div>
+        <div class="ci-owner">Sales</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="ci-box"></div>
+        <div class="ci-text">Ngày 30: Gửi báo cáo traffic tháng đầu (số lượt xem, đặt bàn, nguồn truy cập)</div>
+        <div class="ci-owner">PM</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="ci-box"></div>
+        <div class="ci-text">Ngày 30: Xin Google Review hoặc video testimonial nếu khách hài lòng</div>
+        <div class="ci-owner">Sales</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="ci-box"></div>
+        <div class="ci-text">Ngày 60: Đề xuất upsell nếu phù hợp (Email Marketing, Chatbot, hoặc upgrade gói)</div>
+        <div class="ci-owner">Sales</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="ci-box"></div>
+        <div class="ci-text">Ngày 60: Kích hoạt chương trình referral — "Anh/chị giới thiệu được 1 tháng miễn phí"</div>
+        <div class="ci-owner">Sales</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tip-box success" style="margin-top:4px">Khoảnh khắc WOW quan trọng nhất: lúc website live lần đầu, gửi cho khách xem bằng điện thoại của họ. Nhiều chủ quán chưa bao giờ có website đẹp — phản ứng tự nhiên của họ khi đó chính là testimonial tốt nhất bạn có thể có.</div>
+</div>
+
+</div><!-- end main -->
+
+<script>
+function show(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const items = document.querySelectorAll('.nav-item');
+  const map = {s1:0,s2:1,s3:2,s4:3,d1:4,d2:5,d3:6,d4:7};
+  items[map[id]].classList.add('active');
+}
+
+function toggleCheck(el) {
+  el.classList.toggle('done');
+  const box = el.querySelector('.ci-box');
+  box.textContent = el.classList.contains('done') ? '✓' : '';
+}
+</script>
+</body>
+</html>
