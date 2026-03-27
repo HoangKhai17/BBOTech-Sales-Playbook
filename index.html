@@ -1115,72 +1115,1035 @@ Tuần này bên em có 2 suất setup ưu đãi cuối tháng — em muốn gi�
 ============================= -->
 <div class="section" id="d1">
   <span class="tag tag-green">Tài liệu 1</span>
-  <div class="page-title">Pitch Deck — Cấu trúc 8 slides</div>
-  <div class="page-sub">Dùng khi khách yêu cầu tài liệu, hoặc khi gặp nhóm quyết định (nhiều người). Giữ mỗi slide tối đa 5 dòng chữ. <strong>Ảnh và số liệu nói mạnh hơn chữ.</strong></div>
+  <div class="page-title">Pitch Deck — 8 slides hoàn chỉnh</div>
+  <div class="page-sub">Dùng khi gặp nhóm quyết định hoặc khách yêu cầu tài liệu. Dùng phím ← → hoặc nút điều hướng để xem từng slide.</div>
 
-  <div class="highlight-row">
-    <strong>Nguyên tắc thiết kế:</strong> Mỗi slide trả lời 1 câu hỏi trong đầu khách. Đừng cố giải thích mọi thứ — pitch deck mở ra cuộc trò chuyện, không kết thúc nó.
+<style>
+.deck-shell {
+  background: #0b1120;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.deck-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.deck-counter {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text3);
+}
+.deck-title-bar {
+  font-size: 12px;
+  color: var(--text2);
+  font-weight: 500;
+}
+.deck-nav-btns {
+  display: flex;
+  gap: 6px;
+}
+.deck-btn {
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--text2);
+  font-size: 13px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.deck-btn:hover { background: rgba(255,255,255,0.12); color: var(--text); }
+.deck-btn:disabled { opacity: 0.3; cursor: default; }
+
+/* SLIDE VIEWPORT */
+.deck-viewport {
+  width: 100%;
+  aspect-ratio: 16/9;
+  position: relative;
+  overflow: hidden;
+}
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.slide.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* DOTS */
+.deck-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 0;
+}
+.deck-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.deck-dot.active { background: var(--accent); width: 18px; border-radius: 3px; }
+
+/* ========================
+   SLIDE LAYOUTS
+======================== */
+
+/* S1 — COVER */
+.s1 {
+  background: linear-gradient(135deg, #0f1629 0%, #1a2a50 50%, #0f1629 100%);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 0;
+}
+.s1-logo {
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -1px;
+  margin-bottom: 6px;
+}
+.s1-logo span { color: #4f8ef7; }
+.s1-tagline {
+  font-size: clamp(11px, 2vw, 18px);
+  color: #9ba5c0;
+  margin-bottom: clamp(16px, 3vw, 32px);
+  letter-spacing: 0.5px;
+}
+.s1-headline {
+  font-size: clamp(14px, 2.8vw, 28px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+  max-width: 70%;
+  margin-bottom: clamp(8px, 1.5vw, 16px);
+}
+.s1-headline em { color: #38d9a9; font-style: normal; }
+.s1-sub {
+  font-size: clamp(9px, 1.4vw, 13px);
+  color: #6a7a9b;
+  letter-spacing: 0.3px;
+}
+.s1-divider {
+  width: 40px; height: 2px;
+  background: linear-gradient(90deg, #4f8ef7, #38d9a9);
+  border-radius: 2px;
+  margin: clamp(10px, 2vw, 20px) auto;
+}
+.s1-contact {
+  display: flex;
+  gap: clamp(10px, 2vw, 24px);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: clamp(8px, 1.5vw, 16px);
+}
+.s1-chip {
+  background: rgba(79,142,247,0.12);
+  border: 1px solid rgba(79,142,247,0.25);
+  border-radius: 20px;
+  padding: clamp(3px, 0.5vw, 5px) clamp(8px, 1.5vw, 14px);
+  font-size: clamp(8px, 1.2vw, 11px);
+  color: #7fb3f5;
+}
+.s1-badge {
+  position: absolute;
+  bottom: clamp(8px, 2vw, 20px);
+  right: clamp(12px, 2.5vw, 28px);
+  font-size: clamp(7px, 1vw, 10px);
+  color: rgba(255,255,255,0.2);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* S2 — PAIN POINT */
+.s2 {
+  background: #0d1525;
+  padding: clamp(16px, 3vw, 36px);
+}
+.slide-header {
+  margin-bottom: clamp(10px, 2vw, 22px);
+}
+.slide-eyebrow {
+  font-size: clamp(7px, 1vw, 10px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #e05c5c;
+  margin-bottom: clamp(4px, 0.7vw, 8px);
+}
+.slide-eyebrow.green { color: #38d9a9; }
+.slide-eyebrow.blue  { color: #4f8ef7; }
+.slide-eyebrow.orange{ color: #f6a623; }
+.slide-h1 {
+  font-size: clamp(13px, 2.5vw, 26px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.25;
+}
+.slide-h1 em { color: #e05c5c; font-style: normal; }
+.slide-h1 .hl-green { color: #38d9a9; }
+.slide-h1 .hl-blue  { color: #4f8ef7; }
+.stat-row {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(6px, 1vw, 12px);
+  margin-bottom: clamp(10px, 2vw, 20px);
+}
+.stat-big {
+  font-size: clamp(28px, 6vw, 64px);
+  font-weight: 700;
+  color: #e05c5c;
+  line-height: 1;
+  font-family: 'JetBrains Mono', monospace;
+}
+.stat-label {
+  font-size: clamp(9px, 1.4vw, 14px);
+  color: #9ba5c0;
+  max-width: 200px;
+  line-height: 1.4;
+}
+.pain-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(6px, 1.2vw, 12px);
+  flex: 1;
+}
+.pain-card {
+  background: rgba(224,92,92,0.07);
+  border: 1px solid rgba(224,92,92,0.18);
+  border-radius: clamp(6px, 1vw, 10px);
+  padding: clamp(8px, 1.5vw, 14px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4px, 0.7vw, 8px);
+}
+.pain-icon {
+  font-size: clamp(14px, 2.5vw, 24px);
+}
+.pain-title {
+  font-size: clamp(9px, 1.4vw, 13px);
+  font-weight: 600;
+  color: #f0a0a0;
+  line-height: 1.3;
+}
+.pain-desc {
+  font-size: clamp(7px, 1.1vw, 11px);
+  color: #7a8aa8;
+  line-height: 1.5;
+  flex: 1;
+}
+
+/* S3 — SOLUTION */
+.s3 {
+  background: #0d1525;
+  padding: clamp(16px, 3vw, 36px);
+}
+.solution-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: clamp(8px, 1.5vw, 16px);
+  margin-bottom: clamp(12px, 2vw, 24px);
+}
+.sol-tagline {
+  font-size: clamp(9px, 1.4vw, 14px);
+  color: #9ba5c0;
+  max-width: 80%;
+  line-height: 1.6;
+}
+.sol-diagram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(6px, 1.2vw, 16px);
+  flex-wrap: nowrap;
+  margin: clamp(6px, 1vw, 12px) 0;
+}
+.sol-box {
+  background: rgba(79,142,247,0.1);
+  border: 1px solid rgba(79,142,247,0.25);
+  border-radius: clamp(6px, 1vw, 10px);
+  padding: clamp(6px, 1vw, 12px) clamp(8px, 1.5vw, 20px);
+  text-align: center;
+}
+.sol-box.center-box {
+  background: rgba(79,142,247,0.2);
+  border-color: rgba(79,142,247,0.5);
+}
+.sol-box-label {
+  font-size: clamp(8px, 1.2vw, 12px);
+  color: #9ba5c0;
+  margin-bottom: 2px;
+}
+.sol-box-name {
+  font-size: clamp(10px, 1.6vw, 15px);
+  font-weight: 600;
+  color: #fff;
+}
+.sol-arrow {
+  font-size: clamp(10px, 1.8vw, 18px);
+  color: #4f8ef7;
+}
+.sol-pillars {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(6px, 1vw, 10px);
+}
+.sol-pillar {
+  background: rgba(56,217,169,0.07);
+  border: 1px solid rgba(56,217,169,0.15);
+  border-radius: clamp(6px, 1vw, 10px);
+  padding: clamp(8px, 1.2vw, 14px);
+  text-align: center;
+}
+.sol-pillar-icon { font-size: clamp(14px, 2.2vw, 22px); margin-bottom: 4px; }
+.sol-pillar-name {
+  font-size: clamp(8px, 1.2vw, 12px);
+  font-weight: 600;
+  color: #38d9a9;
+  margin-bottom: 2px;
+}
+.sol-pillar-desc {
+  font-size: clamp(7px, 0.9vw, 10px);
+  color: #6a7a9b;
+  line-height: 1.4;
+}
+
+/* S4 — COMPARISON */
+.s4 {
+  background: #0d1525;
+  padding: clamp(16px, 3vw, 36px);
+}
+.cmp-table {
+  width: 100%;
+  border-collapse: collapse;
+  flex: 1;
+}
+.cmp-table th {
+  padding: clamp(6px, 1vw, 10px) clamp(8px, 1.2vw, 14px);
+  font-size: clamp(8px, 1.2vw, 12px);
+  font-weight: 700;
+  text-align: center;
+  border-bottom: 2px solid rgba(255,255,255,0.08);
+}
+.cmp-table th:first-child { text-align: left; color: #6a7a9b; }
+.cmp-table th.col-agency { color: #9ba5c0; }
+.cmp-table th.col-saas   { color: #9ba5c0; }
+.cmp-table th.col-taas   { color: #38d9a9; background: rgba(56,217,169,0.06); border-radius: 6px 6px 0 0; }
+.cmp-table td {
+  padding: clamp(5px, 0.8vw, 9px) clamp(8px, 1.2vw, 14px);
+  font-size: clamp(8px, 1.1vw, 11px);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  text-align: center;
+  color: #9ba5c0;
+}
+.cmp-table td:first-child { text-align: left; color: #e8eaf2; font-weight: 500; }
+.cmp-table td.col-taas { background: rgba(56,217,169,0.04); }
+.cmp-check { color: #38d9a9; font-size: clamp(10px, 1.5vw, 14px); font-weight: 700; }
+.cmp-cross { color: #e05c5c; font-size: clamp(10px, 1.5vw, 14px); }
+.cmp-partial { color: #f6a623; font-size: clamp(9px, 1.3vw, 12px); }
+.taas-win { color: #38d9a9; font-weight: 600; font-size: clamp(8px, 1.1vw, 11px); }
+
+/* S5 — SERVICES */
+.s5 {
+  background: #0d1525;
+  padding: clamp(16px, 3vw, 36px);
+}
+.svc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(6px, 1.2vw, 12px);
+  flex: 1;
+}
+.svc-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: clamp(6px, 1vw, 10px);
+  padding: clamp(8px, 1.4vw, 16px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4px, 0.6vw, 7px);
+  position: relative;
+  transition: border-color 0.2s;
+}
+.svc-card.main-svc {
+  border-color: rgba(79,142,247,0.35);
+  background: rgba(79,142,247,0.06);
+}
+.svc-badge {
+  position: absolute;
+  top: clamp(6px, 0.8vw, 8px);
+  right: clamp(6px, 0.8vw, 8px);
+  font-size: clamp(7px, 0.9vw, 9px);
+  background: rgba(79,142,247,0.2);
+  color: #7fb3f5;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.svc-icon { font-size: clamp(16px, 2.8vw, 28px); }
+.svc-name { font-size: clamp(10px, 1.5vw, 14px); font-weight: 600; color: #e8eaf2; line-height: 1.2; }
+.svc-tech {
+  font-size: clamp(7px, 1vw, 10px);
+  color: #4f8ef7;
+  font-family: 'JetBrains Mono', monospace;
+}
+.svc-desc { font-size: clamp(7px, 0.95vw, 10px); color: #6a7a9b; line-height: 1.5; flex: 1; }
+.svc-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-top: 2px;
+}
+.svc-feat {
+  font-size: clamp(6px, 0.85vw, 9px);
+  background: rgba(56,217,169,0.08);
+  color: #38d9a9;
+  padding: 2px 5px;
+  border-radius: 3px;
+  border: 1px solid rgba(56,217,169,0.15);
+}
+
+/* S6 — PRICING */
+.s6 {
+  background: #0d1525;
+  padding: clamp(12px, 2.5vw, 30px);
+}
+.pkg-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(8px, 1.5vw, 14px);
+  flex: 1;
+}
+.pkg-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: clamp(8px, 1.2vw, 12px);
+  padding: clamp(10px, 1.8vw, 18px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4px, 0.8vw, 8px);
+  position: relative;
+}
+.pkg-card.popular {
+  border-color: rgba(79,142,247,0.45);
+  background: rgba(79,142,247,0.07);
+}
+.pkg-popular-badge {
+  position: absolute;
+  top: -1px; left: 50%; transform: translateX(-50%);
+  background: #4f8ef7;
+  color: #fff;
+  font-size: clamp(7px, 0.9vw, 9px);
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 0 0 6px 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+.pkg-name { font-size: clamp(12px, 1.8vw, 16px); font-weight: 700; color: #fff; margin-top: 8px; }
+.pkg-for  { font-size: clamp(7px, 0.95vw, 10px); color: #6a7a9b; margin-bottom: clamp(4px, 0.8vw, 8px); }
+.pkg-price-block { margin: clamp(4px, 0.8vw, 8px) 0; }
+.pkg-setup-label { font-size: clamp(7px, 0.9vw, 9px); color: #6a7a9b; text-transform: uppercase; letter-spacing: 0.5px; }
+.pkg-setup-val { font-size: clamp(12px, 1.8vw, 17px); font-weight: 700; color: #e8eaf2; font-family: 'JetBrains Mono', monospace; }
+.pkg-monthly { margin-top: clamp(4px, 0.6vw, 6px); }
+.pkg-monthly-val {
+  font-size: clamp(18px, 3.5vw, 34px);
+  font-weight: 700;
+  color: #4f8ef7;
+  font-family: 'JetBrains Mono', monospace;
+  line-height: 1;
+}
+.pkg-monthly-val.popular-val { color: #5cc8ff; }
+.pkg-per-month { font-size: clamp(7px, 0.9vw, 9px); color: #6a7a9b; margin-top: 1px; }
+.pkg-divider { height: 1px; background: rgba(255,255,255,0.06); margin: clamp(4px, 0.8vw, 8px) 0; }
+.pkg-features { display: flex; flex-direction: column; gap: clamp(3px, 0.5vw, 5px); flex: 1; }
+.pkg-feat {
+  font-size: clamp(7px, 0.95vw, 10px);
+  color: #9ba5c0;
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  line-height: 1.4;
+}
+.pkg-feat::before { content: "✓"; color: #38d9a9; font-weight: 700; flex-shrink: 0; }
+.pkg-feat.highlight { color: #e8eaf2; }
+
+/* S7 — PROCESS */
+.s7 {
+  background: #0d1525;
+  padding: clamp(16px, 3vw, 36px);
+}
+.process-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  margin-bottom: clamp(12px, 2vw, 22px);
+}
+.proc-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+.proc-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: clamp(12px, 2vw, 18px);
+  left: 60%;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(79,142,247,0.5), rgba(79,142,247,0.1));
+}
+.proc-num {
+  width: clamp(28px, 4vw, 38px);
+  height: clamp(28px, 4vw, 38px);
+  border-radius: 50%;
+  background: rgba(79,142,247,0.15);
+  border: 2px solid rgba(79,142,247,0.4);
+  color: #4f8ef7;
+  font-size: clamp(10px, 1.5vw, 13px);
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: clamp(5px, 0.8vw, 8px);
+  font-family: 'JetBrains Mono', monospace;
+  position: relative;
+  z-index: 1;
+}
+.proc-name { font-size: clamp(9px, 1.3vw, 12px); font-weight: 600; color: #e8eaf2; margin-bottom: 3px; }
+.proc-desc { font-size: clamp(7px, 0.9vw, 10px); color: #6a7a9b; line-height: 1.4; padding: 0 4px; }
+.guarantee-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(6px, 1.2vw, 12px);
+}
+.guarantee-card {
+  background: rgba(56,217,169,0.06);
+  border: 1px solid rgba(56,217,169,0.18);
+  border-radius: clamp(6px, 1vw, 10px);
+  padding: clamp(8px, 1.4vw, 14px);
+  text-align: center;
+}
+.guar-icon { font-size: clamp(14px, 2.2vw, 22px); margin-bottom: 4px; }
+.guar-title { font-size: clamp(9px, 1.3vw, 12px); font-weight: 600; color: #38d9a9; margin-bottom: 3px; }
+.guar-desc  { font-size: clamp(7px, 0.95vw, 10px); color: #6a7a9b; line-height: 1.4; }
+
+/* S8 — CTA */
+.s8 {
+  background: linear-gradient(160deg, #0d1525 0%, #112240 60%, #0d1525 100%);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: clamp(8px, 1.5vw, 16px);
+  padding: clamp(16px, 3vw, 36px);
+}
+.cta-eyebrow {
+  font-size: clamp(8px, 1.1vw, 11px);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #38d9a9;
+  font-weight: 700;
+}
+.cta-headline {
+  font-size: clamp(18px, 4vw, 42px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+  max-width: 75%;
+}
+.cta-headline em { color: #4f8ef7; font-style: normal; }
+.cta-sub {
+  font-size: clamp(9px, 1.3vw, 13px);
+  color: #6a7a9b;
+  max-width: 55%;
+  line-height: 1.6;
+}
+.cta-contacts {
+  display: flex;
+  gap: clamp(8px, 1.5vw, 16px);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: clamp(4px, 0.8vw, 8px);
+}
+.cta-contact-item {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: clamp(6px, 1vw, 10px);
+  padding: clamp(8px, 1.2vw, 12px) clamp(12px, 2vw, 20px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+.cta-contact-label { font-size: clamp(7px, 0.9vw, 9px); color: #6a7a9b; text-transform: uppercase; letter-spacing: 0.5px; }
+.cta-contact-val { font-size: clamp(10px, 1.5vw, 14px); color: #e8eaf2; font-weight: 600; }
+.cta-offer {
+  background: rgba(246,166,35,0.1);
+  border: 1px solid rgba(246,166,35,0.25);
+  border-radius: clamp(6px, 1vw, 10px);
+  padding: clamp(7px, 1.2vw, 12px) clamp(12px, 2vw, 24px);
+  font-size: clamp(9px, 1.3vw, 13px);
+  color: #f6a623;
+  font-weight: 500;
+}
+.cta-offer strong { font-weight: 700; }
+</style>
+
+<div class="deck-shell">
+  <div class="deck-topbar">
+    <div class="deck-counter"><span id="deck-cur">1</span> / 8</div>
+    <div class="deck-title-bar" id="deck-slide-title">Cover — Định vị</div>
+    <div class="deck-nav-btns">
+      <button class="deck-btn" id="btn-prev" onclick="deckNav(-1)" disabled>←</button>
+      <button class="deck-btn" id="btn-next" onclick="deckNav(1)">→</button>
+    </div>
   </div>
 
-  <div class="slide-grid">
-    <div class="slide-card">
-      <span class="slide-num">01</span>
-      <div class="slide-name">Cover — Định vị</div>
-      <div class="slide-content">Headline: <em>"Phòng IT Online của doanh nghiệp bạn"</em><br>Sub: BBOTech — Không cần đội IT riêng<br>Logo + thông tin liên hệ</div>
-      <div class="slide-key">Câu hỏi khách: "Đây là ai?"</div>
+  <div class="deck-viewport">
+
+    <!-- SLIDE 01 — COVER -->
+    <div class="slide s1 visible" data-title="Cover — Định vị">
+      <div class="s1-logo">BBO<span>Tech</span></div>
+      <div class="s1-tagline">Technical as a Service</div>
+      <div class="s1-divider"></div>
+      <div class="s1-headline">Phòng IT Online<br>của <em>doanh nghiệp bạn</em></div>
+      <div class="s1-sub">Không cần tuyển đội IT riêng · Không lo vận hành hệ thống</div>
+      <div class="s1-contact">
+        <span class="s1-chip">bbotech.vn</span>
+        <span class="s1-chip">0797 467 390</span>
+        <span class="s1-chip">support@bbotech.vn</span>
+        <span class="s1-chip">TP. Hồ Chí Minh</span>
+      </div>
+      <div class="s1-badge">PITCH DECK · 2025</div>
     </div>
 
-    <div class="slide-card">
-      <span class="slide-num">02</span>
-      <div class="slide-name">Pain Point — Vấn đề thực tế</div>
-      <div class="slide-content">Stat: "90% SME Việt Nam không có bộ phận IT"<br>3 tình huống: website hỏng giờ cao điểm / bỏ lỡ tin nhắn khách / không ai cập nhật nội dung<br>Ảnh minh họa thực tế</div>
-      <div class="slide-key">Câu hỏi khách: "Có phải vấn đề của mình không?"</div>
+    <!-- SLIDE 02 — PAIN POINT -->
+    <div class="slide s2" data-title="Pain Point — Vấn đề thực tế">
+      <div class="slide-header">
+        <div class="slide-eyebrow">Vấn đề thực tế</div>
+        <div class="slide-h1">90% doanh nghiệp Việt Nam<br><em>không có bộ phận IT riêng</em></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-big">90%</div>
+        <div class="stat-label">SME Việt Nam đang tự "bơi" với công nghệ — không ai chịu trách nhiệm khi hệ thống gặp sự cố</div>
+      </div>
+      <div class="pain-cards">
+        <div class="pain-card">
+          <div class="pain-icon">🔴</div>
+          <div class="pain-title">Website hỏng lúc 12 giờ trưa</div>
+          <div class="pain-desc">Giờ cao điểm, khách đang vào xem menu — website trắng trang. Không biết gọi ai, mất đơn hàng trong khi đang đứng bếp.</div>
+        </div>
+        <div class="pain-card">
+          <div class="pain-icon">💬</div>
+          <div class="pain-title">Khách nhắn — không ai trả lời</div>
+          <div class="pain-desc">Inbox Facebook, Zalo tràn ngập trong giờ bận. Khách chờ 2–3 tiếng không có người phản hồi → tự tìm quán khác.</div>
+        </div>
+        <div class="pain-card">
+          <div class="pain-icon">📝</div>
+          <div class="pain-title">Muốn cập nhật — phải đợi cả tuần</div>
+          <div class="pain-desc">Thêm món mới, chương trình khuyến mãi — phải gọi cho freelancer. Báo giá, hẹn lịch, chờ đợi. Đến lúc xong thì hết đợt khuyến mãi rồi.</div>
+        </div>
+      </div>
     </div>
 
-    <div class="slide-card">
-      <span class="slide-num">03</span>
-      <div class="slide-name">Solution — BBOTech là gì</div>
-      <div class="slide-content">1 câu: "Chúng tôi là phòng IT thuê ngoài — setup, vận hành, bảo trì, hỗ trợ liên tục"<br>Diagram đơn giản: Doanh nghiệp ↔ BBOTech ↔ Hệ thống công nghệ</div>
-      <div class="slide-key">Câu hỏi khách: "Họ làm gì?"</div>
+    <!-- SLIDE 03 — SOLUTION -->
+    <div class="slide s3" data-title="Giải pháp — BBOTech là gì">
+      <div class="slide-header">
+        <div class="slide-eyebrow green">Giải pháp</div>
+        <div class="slide-h1">BBOTech — <span class="hl-green">Phòng IT thuê ngoài</span><br>cho doanh nghiệp của bạn</div>
+      </div>
+      <div class="solution-center">
+        <div class="sol-tagline">Chúng tôi setup, vận hành và bảo trì toàn bộ hệ thống công nghệ cho doanh nghiệp bạn — như một phòng IT nội bộ, nhưng với chi phí thấp hơn nhiều lần</div>
+        <div class="sol-diagram">
+          <div class="sol-box">
+            <div class="sol-box-label">Doanh nghiệp</div>
+            <div class="sol-box-name">Quán F&B / Spa<br>/ SME của bạn</div>
+          </div>
+          <div class="sol-arrow">⟷</div>
+          <div class="sol-box center-box">
+            <div class="sol-box-label">Phòng IT Online</div>
+            <div class="sol-box-name">BBOTech TaaS</div>
+          </div>
+          <div class="sol-arrow">⟷</div>
+          <div class="sol-box">
+            <div class="sol-box-label">Hệ thống</div>
+            <div class="sol-box-name">Website · Chatbot<br>· Email · Hạ tầng</div>
+          </div>
+        </div>
+      </div>
+      <div class="sol-pillars">
+        <div class="sol-pillar">
+          <div class="sol-pillar-icon">⚙️</div>
+          <div class="sol-pillar-name">Setup</div>
+          <div class="sol-pillar-desc">Cài đặt & thiết lập toàn bộ hệ thống từ đầu</div>
+        </div>
+        <div class="sol-pillar">
+          <div class="sol-pillar-icon">🖥️</div>
+          <div class="sol-pillar-name">Vận hành</div>
+          <div class="sol-pillar-desc">Quản lý & điều phối hệ thống hàng ngày</div>
+        </div>
+        <div class="sol-pillar">
+          <div class="sol-pillar-icon">🛡️</div>
+          <div class="sol-pillar-name">Bảo trì</div>
+          <div class="sol-pillar-desc">Update, backup, bảo mật liên tục</div>
+        </div>
+        <div class="sol-pillar">
+          <div class="sol-pillar-icon">📞</div>
+          <div class="sol-pillar-name">Hỗ trợ</div>
+          <div class="sol-pillar-desc">Phản hồi qua Zalo, xử lý trong 4 giờ</div>
+        </div>
+      </div>
     </div>
 
-    <div class="slide-card">
-      <span class="slide-num">04</span>
-      <div class="slide-name">So sánh mô hình</div>
-      <div class="slide-content">Bảng 3 cột: Agency truyền thống / SaaS tự dùng / BBOTech TaaS<br>Highlight điểm khác biệt: self-host, setup xong + duy trì, giá cố định</div>
-      <div class="slide-key">Câu hỏi khách: "Khác gì người khác?"</div>
+    <!-- SLIDE 04 — COMPARISON -->
+    <div class="slide s4" data-title="So sánh mô hình — TaaS khác gì?">
+      <div class="slide-header">
+        <div class="slide-eyebrow blue">Sự khác biệt</div>
+        <div class="slide-h1">Tại sao TaaS <span class="hl-blue">khác biệt</span> hoàn toàn?</div>
+      </div>
+      <table class="cmp-table">
+        <thead>
+          <tr>
+            <th style="width:28%">Tiêu chí</th>
+            <th class="col-agency">Agency truyền thống</th>
+            <th class="col-saas">SaaS tự dùng</th>
+            <th class="col-taas">BBOTech TaaS ★</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Ai setup hệ thống?</td>
+            <td class="col-agency"><span class="cmp-check">✓</span> Agency làm</td>
+            <td class="col-saas"><span class="cmp-cross">✗</span> Tự làm</td>
+            <td class="col-taas"><span class="taas-win">✓ BBOTech setup</span></td>
+          </tr>
+          <tr>
+            <td>Ai quản lý sau bàn giao?</td>
+            <td class="col-agency"><span class="cmp-cross">✗</span> Tự lo</td>
+            <td class="col-saas"><span class="cmp-cross">✗</span> Tự lo</td>
+            <td class="col-taas"><span class="taas-win">✓ BBOTech quản lý mãi</span></td>
+          </tr>
+          <tr>
+            <td>Sở hữu dữ liệu 100%</td>
+            <td class="col-agency"><span class="cmp-check">✓</span></td>
+            <td class="col-saas"><span class="cmp-cross">✗</span> Nền tảng kiểm soát</td>
+            <td class="col-taas"><span class="taas-win">✓ Self-host, toàn quyền</span></td>
+          </tr>
+          <tr>
+            <td>Chi phí dài hạn</td>
+            <td class="col-agency"><span class="cmp-partial">~</span> Cao khi cần thêm</td>
+            <td class="col-saas"><span class="cmp-cross">✗</span> Subscription tích lũy</td>
+            <td class="col-taas"><span class="taas-win">✓ Setup + phí tháng cố định</span></td>
+          </tr>
+          <tr>
+            <td>Hỗ trợ kỹ thuật</td>
+            <td class="col-agency"><span class="cmp-cross">✗</span> Phải thuê thêm</td>
+            <td class="col-saas"><span class="cmp-partial">~</span> Ticket hệ thống</td>
+            <td class="col-taas"><span class="taas-win">✓ Zalo trực tiếp, 4h SLA</span></td>
+          </tr>
+          <tr>
+            <td>Không cần biết IT</td>
+            <td class="col-agency"><span class="cmp-partial">~</span> Cần giao tiếp kỹ thuật</td>
+            <td class="col-saas"><span class="cmp-cross">✗</span> Phải tự học</td>
+            <td class="col-taas"><span class="taas-win">✓ Chỉ cần nhắn Zalo</span></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <div class="slide-card">
-      <span class="slide-num">05</span>
-      <div class="slide-name">Demo / Portfolio</div>
-      <div class="slide-content">Screenshots 2–3 website mẫu đẹp<br>QR code → link demo live<br>Tên quán + ngành (kể cả đang làm thử)</div>
-      <div class="slide-key">Câu hỏi khách: "Làm có đẹp không?"</div>
+    <!-- SLIDE 05 — SERVICES -->
+    <div class="slide s5" data-title="Hệ thống dịch vụ TaaS">
+      <div class="slide-header">
+        <div class="slide-eyebrow blue">Dịch vụ</div>
+        <div class="slide-h1">Hệ thống dịch vụ <span class="hl-blue">TaaS</span> đầy đủ</div>
+      </div>
+      <div class="svc-grid">
+        <div class="svc-card main-svc">
+          <div class="svc-badge">Chủ lực</div>
+          <div class="svc-icon">🌐</div>
+          <div class="svc-name">WaaS — Website as a Service</div>
+          <div class="svc-tech">WordPress / PHP + AI Agent</div>
+          <div class="svc-desc">Website chuyên nghiệp, đặt bàn online, tự động hóa quản lý nội dung. Self-host trên server riêng.</div>
+          <div class="svc-features">
+            <span class="svc-feat">Đặt bàn</span>
+            <span class="svc-feat">Mobile-first</span>
+            <span class="svc-feat">SEO chuẩn</span>
+          </div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">🤖</div>
+          <div class="svc-name">Chatbot đa nền tảng</div>
+          <div class="svc-tech">Dify / Ragflow (self-host)</div>
+          <div class="svc-desc">Chatbot AI trả lời tự động 24/7 trên Zalo, Facebook, website. Kiến thức được huấn luyện theo nghiệp vụ riêng.</div>
+          <div class="svc-features">
+            <span class="svc-feat">Zalo OA</span>
+            <span class="svc-feat">Facebook</span>
+            <span class="svc-feat">RAG</span>
+          </div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">📱</div>
+          <div class="svc-name">Quản lý Social đa kênh</div>
+          <div class="svc-tech">Chatwoot (self-host)</div>
+          <div class="svc-desc">Gom tất cả tin nhắn từ Facebook, Zalo, Instagram về một màn hình. Không bỏ sót khách nào.</div>
+          <div class="svc-features">
+            <span class="svc-feat">Inbox hợp nhất</span>
+            <span class="svc-feat">Báo cáo</span>
+          </div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">📧</div>
+          <div class="svc-name">Email Marketing</div>
+          <div class="svc-tech">Listmonk (self-host)</div>
+          <div class="svc-desc">Gửi email marketing đến danh sách khách hàng. Không giới hạn người nhận, sở hữu data 100%.</div>
+          <div class="svc-features">
+            <span class="svc-feat">Unlimited sends</span>
+            <span class="svc-feat">Analytics</span>
+          </div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">⚡</div>
+          <div class="svc-name">Automation</div>
+          <div class="svc-tech">n8n (self-host)</div>
+          <div class="svc-desc">Tự động hóa quy trình vận hành: thông báo đặt bàn, gửi xác nhận, đồng bộ dữ liệu, báo cáo tự động.</div>
+          <div class="svc-features">
+            <span class="svc-feat">50+ workflows</span>
+            <span class="svc-feat">API</span>
+          </div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">🖥️</div>
+          <div class="svc-name">Hạ tầng — IaaS</div>
+          <div class="svc-tech">VPS / Server / Cloud</div>
+          <div class="svc-desc">Tư vấn, cấp phát và quản lý hạ tầng server cho toàn bộ hệ thống. Bảo mật, backup, monitoring 24/7.</div>
+          <div class="svc-features">
+            <span class="svc-feat">99.9% uptime</span>
+            <span class="svc-feat">Backup daily</span>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="slide-card">
-      <span class="slide-num">06</span>
-      <div class="slide-name">Gói dịch vụ & Giá</div>
-      <div class="slide-content">3 gói: Starter / Pro / Premium<br>Hiển thị rõ: phí setup 1 lần + phí tháng<br>Highlight gói Pro là "được chọn nhiều nhất"</div>
-      <div class="slide-key">Câu hỏi khách: "Chi phí bao nhiêu?"</div>
+    <!-- SLIDE 06 — PRICING -->
+    <div class="slide s6" data-title="Gói dịch vụ & Giá">
+      <div class="slide-header" style="margin-bottom:clamp(8px,1.5vw,16px)">
+        <div class="slide-eyebrow orange">Gói dịch vụ</div>
+        <div class="slide-h1" style="font-size:clamp(13px,2.2vw,22px)">Chọn gói phù hợp — <span style="color:#f6a623">chi phí rõ ràng từ đầu</span></div>
+      </div>
+      <div class="pkg-grid">
+        <div class="pkg-card">
+          <div class="pkg-name">Starter</div>
+          <div class="pkg-for">Quán nhỏ · Mới khởi nghiệp</div>
+          <div class="pkg-price-block">
+            <div class="pkg-setup-label">Phí setup 1 lần</div>
+            <div class="pkg-setup-val">12.500.000đ</div>
+          </div>
+          <div class="pkg-monthly">
+            <div class="pkg-monthly-val">2.990K</div>
+            <div class="pkg-per-month">/ tháng duy trì</div>
+          </div>
+          <div class="pkg-divider"></div>
+          <div class="pkg-features">
+            <div class="pkg-feat">Landing page cơ bản (1–3 trang)</div>
+            <div class="pkg-feat">Form đặt bàn online</div>
+            <div class="pkg-feat">Tích hợp Zalo / Facebook</div>
+            <div class="pkg-feat">Cập nhật nội dung 2 lần/tháng</div>
+            <div class="pkg-feat">Hỗ trợ giờ hành chính</div>
+            <div class="pkg-feat">Backup hàng tuần</div>
+          </div>
+        </div>
+
+        <div class="pkg-card popular">
+          <div class="pkg-popular-badge">Được chọn nhiều nhất</div>
+          <div class="pkg-name">Pro</div>
+          <div class="pkg-for">Quán đang phát triển · SME</div>
+          <div class="pkg-price-block">
+            <div class="pkg-setup-label">Phí setup 1 lần</div>
+            <div class="pkg-setup-val">16.000.000đ</div>
+          </div>
+          <div class="pkg-monthly">
+            <div class="pkg-monthly-val popular-val">3.990K</div>
+            <div class="pkg-per-month">/ tháng duy trì</div>
+          </div>
+          <div class="pkg-divider"></div>
+          <div class="pkg-features">
+            <div class="pkg-feat highlight">Website đa trang (5–10 trang)</div>
+            <div class="pkg-feat highlight">Đặt bàn nâng cao + thông báo</div>
+            <div class="pkg-feat">Cập nhật không giới hạn</div>
+            <div class="pkg-feat">Hỗ trợ 7:00–22:00, SLA 4h</div>
+            <div class="pkg-feat">Backup hàng ngày</div>
+            <div class="pkg-feat highlight">Báo cáo traffic hàng tháng</div>
+          </div>
+        </div>
+
+        <div class="pkg-card">
+          <div class="pkg-name">Premium</div>
+          <div class="pkg-for">Chuỗi · F&B lớn · E-commerce</div>
+          <div class="pkg-price-block">
+            <div class="pkg-setup-label">Phí setup 1 lần</div>
+            <div class="pkg-setup-val">20.000.000đ</div>
+          </div>
+          <div class="pkg-monthly">
+            <div class="pkg-monthly-val">4.990K</div>
+            <div class="pkg-per-month">/ tháng duy trì</div>
+          </div>
+          <div class="pkg-divider"></div>
+          <div class="pkg-features">
+            <div class="pkg-feat highlight">Full e-commerce + đặt hàng</div>
+            <div class="pkg-feat">Tích hợp thanh toán online</div>
+            <div class="pkg-feat highlight">Hỗ trợ 24/7, SLA 2h</div>
+            <div class="pkg-feat">Backup real-time</div>
+            <div class="pkg-feat">Tích hợp CRM / POS</div>
+            <div class="pkg-feat highlight">Combo upsell Chatbot / Email</div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="slide-card">
-      <span class="slide-num">07</span>
-      <div class="slide-name">Quy trình & Cam kết</div>
-      <div class="slide-content">5 bước: Tư vấn → Ký hợp đồng → Setup → Bàn giao → Hỗ trợ liên tục<br>Cam kết: phản hồi trong 2h, uptime 99%, hoàn tiền nếu không hài lòng</div>
-      <div class="slide-key">Câu hỏi khách: "Rủi ro có được bảo vệ không?"</div>
+    <!-- SLIDE 07 — PROCESS -->
+    <div class="slide s7" data-title="Quy trình & Cam kết">
+      <div class="slide-header">
+        <div class="slide-eyebrow green">Quy trình</div>
+        <div class="slide-h1">Từ <span class="hl-green">ký hợp đồng</span> đến website live — 7 đến 14 ngày</div>
+      </div>
+      <div class="process-row">
+        <div class="proc-step">
+          <div class="proc-num">01</div>
+          <div class="proc-name">Tư vấn</div>
+          <div class="proc-desc">Lắng nghe nhu cầu, chọn gói phù hợp, báo giá chính thức</div>
+        </div>
+        <div class="proc-step">
+          <div class="proc-num">02</div>
+          <div class="proc-name">Ký & Đặt cọc</div>
+          <div class="proc-desc">Ký hợp đồng, thanh toán 50% phí setup để bắt đầu</div>
+        </div>
+        <div class="proc-step">
+          <div class="proc-num">03</div>
+          <div class="proc-name">Phát triển</div>
+          <div class="proc-desc">Setup server, xây dựng website, cấu hình hệ thống</div>
+        </div>
+        <div class="proc-step">
+          <div class="proc-num">04</div>
+          <div class="proc-name">Bàn giao</div>
+          <div class="proc-desc">Review với khách, chỉnh sửa, go-live chính thức</div>
+        </div>
+        <div class="proc-step">
+          <div class="proc-num">05</div>
+          <div class="proc-name">Hỗ trợ liên tục</div>
+          <div class="proc-desc">Vận hành, bảo trì, cập nhật — hàng tháng mãi mãi</div>
+        </div>
+      </div>
+      <div class="guarantee-row">
+        <div class="guarantee-card">
+          <div class="guar-icon">⚡</div>
+          <div class="guar-title">Phản hồi trong 4 giờ</div>
+          <div class="guar-desc">Mọi yêu cầu hỗ trợ qua Zalo được phản hồi trong 4 giờ (7:00–22:00). Sự cố khẩn cấp trong 2 giờ.</div>
+        </div>
+        <div class="guarantee-card">
+          <div class="guar-icon">🔒</div>
+          <div class="guar-title">Dữ liệu 100% của bạn</div>
+          <div class="guar-desc">Self-host trên server bạn kiểm soát. Không ai, kể cả BBOTech, truy cập dữ liệu khi chưa được phép.</div>
+        </div>
+        <div class="guarantee-card">
+          <div class="guar-icon">💰</div>
+          <div class="guar-title">Hoàn tiền 30 ngày</div>
+          <div class="guar-desc">Nếu không hài lòng trong 30 ngày đầu sau go-live, hoàn lại 50% phí setup. Không điều kiện.</div>
+        </div>
+      </div>
     </div>
 
-    <div class="slide-card">
-      <span class="slide-num">08</span>
-      <div class="slide-name">CTA — Bước tiếp theo</div>
-      <div class="slide-content">1 nút duy nhất: "Đặt lịch tư vấn miễn phí 30 phút"<br>Số Zalo + QR code<br>Ưu đãi thời hạn nếu có</div>
-      <div class="slide-key">Câu hỏi khách: "Tôi phải làm gì tiếp theo?"</div>
+    <!-- SLIDE 08 — CTA -->
+    <div class="slide s8" data-title="Bắt đầu ngay hôm nay">
+      <div class="cta-eyebrow">Bước tiếp theo</div>
+      <div class="cta-headline">Sẵn sàng có<br><em>Phòng IT Online</em><br>của riêng bạn?</div>
+      <div class="cta-sub">Tư vấn miễn phí 30 phút — không áp lực, không cam kết. Chúng tôi lắng nghe và đề xuất giải pháp phù hợp nhất cho doanh nghiệp bạn.</div>
+      <div class="cta-contacts">
+        <div class="cta-contact-item">
+          <span class="cta-contact-label">Zalo / Điện thoại</span>
+          <span class="cta-contact-val">0797 467 390</span>
+        </div>
+        <div class="cta-contact-item">
+          <span class="cta-contact-label">Email</span>
+          <span class="cta-contact-val">support@bbotech.vn</span>
+        </div>
+        <div class="cta-contact-item">
+          <span class="cta-contact-label">Website</span>
+          <span class="cta-contact-val">store.bbotech.vn</span>
+        </div>
+      </div>
+      <div class="cta-offer">
+        <strong>Ưu đãi tháng này:</strong> 3 suất setup giá Early Adopter — giảm 20% phí setup cho khách ký trong tháng.
+      </div>
     </div>
+
+  </div><!-- end viewport -->
+
+  <div class="deck-dots" id="deck-dots">
+    <div class="deck-dot active" onclick="deckGo(0)"></div>
+    <div class="deck-dot" onclick="deckGo(1)"></div>
+    <div class="deck-dot" onclick="deckGo(2)"></div>
+    <div class="deck-dot" onclick="deckGo(3)"></div>
+    <div class="deck-dot" onclick="deckGo(4)"></div>
+    <div class="deck-dot" onclick="deckGo(5)"></div>
+    <div class="deck-dot" onclick="deckGo(6)"></div>
+    <div class="deck-dot" onclick="deckGo(7)"></div>
   </div>
+</div><!-- end deck-shell -->
 
-  <div class="tip-box" style="margin-top:16px">Tạo 2 phiên bản: một bản đầy đủ để trình bày live (nhiều hình, ít chữ), một bản "leave-behind" gửi qua Zalo (có thêm chi tiết). Đừng dùng cùng một bản cho cả hai mục đích.</div>
+<div class="tip-box" style="margin-top:4px">Dùng phím ← → để điều hướng nhanh giữa các slides. Gửi khách xem dưới dạng file HTML — mở trực tiếp trên trình duyệt, không cần cài gì thêm.</div>
+
+<script>
+(function(){
+  var cur = 0;
+  var slides = document.querySelectorAll('.slide');
+  var dots = document.querySelectorAll('.deck-dot');
+  var titles = ['Cover — Định vị','Pain Point — Vấn đề thực tế','Giải pháp — BBOTech là gì','So sánh mô hình — TaaS khác gì?','Hệ thống dịch vụ TaaS','Gói dịch vụ & Giá','Quy trình & Cam kết','Bắt đầu ngay hôm nay'];
+
+  window.deckNav = function(dir){ deckGo(cur + dir); };
+  window.deckGo = function(idx){
+    if(idx < 0 || idx >= slides.length) return;
+    slides[cur].classList.remove('visible');
+    dots[cur].classList.remove('active');
+    cur = idx;
+    slides[cur].classList.add('visible');
+    dots[cur].classList.add('active');
+    document.getElementById('deck-cur').textContent = cur + 1;
+    document.getElementById('deck-slide-title').textContent = titles[cur];
+    document.getElementById('btn-prev').disabled = cur === 0;
+    document.getElementById('btn-next').disabled = cur === slides.length - 1;
+  };
+
+  document.addEventListener('keydown', function(e){
+    var d1 = document.getElementById('d1');
+    if(!d1 || !d1.classList.contains('active')) return;
+    if(e.key === 'ArrowRight' || e.key === 'ArrowDown') deckNav(1);
+    if(e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   deckNav(-1);
+  });
+})();
+</script>
+
 </div>
 
 <!-- ============================
